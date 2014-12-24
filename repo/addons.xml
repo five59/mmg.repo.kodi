@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+<addon id="plugin.video.turkishtv" name="Turkish TV" version="0.1.14122215a" provider-name="andrewmarconi">
+  <requires>
+    <import addon="xbmc.python" version="2.6.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Watch live Turkish television.</summary>
+	<summary lang="tr">Canlı Türk televizyon izle.</summary>
+	<summary lang="de">Sehen Sie Live-türkischen Fernsehen</summary>
+
+    <description lang="en">Because streams tend to move to new locations, don't be surprised if some channels stop working at some point. We'll do our best to keep these up to date.</description>
+    <disclaimer lang="en"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="repository.mmg" name="MMG Kodi Repository" version="1.0.14122215a" provider-name="andrewmarconi">
+	<extension point="xbmc.addon.repository" name="MMG Kodi Repository">
+		<info compressed="false">https://raw.githubusercontent.com/andrewmarconi/mmg-kodi/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/andrewmarconi/mmg-kodi/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/andrewmarconi/mmg-kodi/master/zips</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>MMG Kodi Repository</summary>
+		<description>Download and install some unoffical add-ons for Kodi.</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+</addons>
