@@ -1,1 +1,1 @@
-README
+Service: com.marconimedia.kodi
