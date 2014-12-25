@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # *
 # *  Copyright (C) 2012-2013 Garrett Brown
 # *  Copyright (C) 2010      j48antialias
@@ -36,6 +38,7 @@ import sys
 import time
 import re
 import xml.etree.ElementTree as ET
+
 try:
     import shutil,zipfile
 except Exception as e:
@@ -76,27 +79,24 @@ class Generator:
         # loop thru and add each addons addon.xml file
         for addon in addons:
             try:
-                # skip any file or .svn folder or .git folder
-                if ( not os.path.isdir( addon ) or addon == ".svn" or addon == ".git" or addon == "zips"  ): continue
-                # create path
-                _path = os.path.join( addon, "addon.xml" )
-                # split lines for stripping
-                xml_lines = open( _path, "r" ).read().splitlines()
-                # new addon
-                addon_xml = ""
-                # loop thru cleaning each line
-                for line in xml_lines:
-                    # skip encoding format line
-                    if ( line.find( "<?xml" ) >= 0 ): continue
-                    # add line
-                    if sys.version < '3':
-                        addon_xml += unicode( line.rstrip() + "\n", "UTF-8" )
-                    else:
-                        addon_xml += line.rstrip() + "\n"
-                # we succeeded so add to our final addons.xml text
-                addons_xml += addon_xml.rstrip() + "\n\n"
+                if re.search("plugin|script|service|skin|repository" , addon):
+                    print("     * Found " + addon)
+                    _path = os.path.join( src_dir, addon, "addon.xml" )
+                    xml_lines = open( _path, "r" ).read().splitlines()
+                    addon_xml = ""
+                    for line in xml_lines:
+                        if ( line.find( "<?xml" ) >= 0 ): continue
+                        if sys.version < '3':
+                            addon_xml += unicode( line.rstrip() + "\n", "UTF-8" )
+                        else:
+                            addon_xml += line.rstrip() + "\n"
+                    addons_xml += addon_xml.rstrip() + "\n\n"
+                else:
+                    pass
+            
             except Exception as e:
                 # missing or poorly formatted addon.xml
+                _path = os.path.join( addon, "addon.xml" )
                 print("     * Excluding %s for %s" % ( _path, e ))
         # clean and add closing tag
         addons_xml = addons_xml.strip() + u("\n</addons>\n")
