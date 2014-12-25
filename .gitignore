@@ -53,3 +53,9 @@ docs/_build/
 # PyBuilder
 target/
 Thumbs.db
+
+# Mac Stuff
+.DS_Store
+
+# Local Ignores
+resources/
