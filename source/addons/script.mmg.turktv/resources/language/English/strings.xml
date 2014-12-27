@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+	<strings>
+		<string id ="30010">National Channels</string>
+		<string id ="30011">News Channels</string>
+		<string id ="30012">Kids Channels</string>
+		<string id ="30013">Movie and TV Channels</string>
+		<string id ="30014">Sports Channels</string>
+		<string id ="30015">Religious Channels</string>
+		<string id ="30016">Music Channels</string>
+		<string id ="30017">Documentary and General Culture</string>
+		<string id ="30018">Local Channels</string>
+		<string id ="30019">Foreign Language Channels</string>
+	</strings>

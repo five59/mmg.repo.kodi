@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.mmg.turktv" name="Turkish TV" version="0.141226.5" provider-name="andrewmarconi">
+	<requires>
+<!--
+		<import addon="xbmc.python"					version="2.0.0"/>
+		<import addon="xbmc.xbmcgui"				version="5.0.0"/>
+		<import addon="xbmc.json"                   version="6.0.0"/>
+		<import addon="xbmc.metadata"               version="2.0.0"/>
+		<import addon="xbmc.addon"                  version="14.0.0"/>
+// -->
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Live Turkish Television</summary>
+		<description lang="en">Watch live streams of Turkish broadcast and cable television.</description>
+		<disclaimer lang="en"></disclaimer>
+		
+		<summary lang="tr">Canlı Türk Televizyon</summary>
+		<description lang="tr">Türk yayın ve kablolu televizyon canlı akışları İzle.</description>
+		<disclaimer lang="tr"></disclaimer>
+		
+		<summary lang="de">Live-türkischen Fernsehen</summary>
+		<description lang="de">Guckt man Livestreams der türkischen Rundfunk und Kabel-TV.</description>
+		<disclaimer lang="de"></disclaimer>
+		
+		<language>en tr de</language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>http://kodi.marconimedia.com/</website>
+		<email>info@marconimedia.com</email>
+		<source></source>
+	</extension>
+</addon>
