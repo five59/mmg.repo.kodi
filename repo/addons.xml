@@ -1,57 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="script.pyxbmct.demo"
-   name="PyXBMCt Demo"
-   version="1.0.0"
-   provider-name="Roman_V_M">
-  <requires>
-    <import addon="xbmc.python" version="2.14.0"/>
-    <import addon="script.module.pyxbmct" version="1.1.4" />
-  </requires>
-  <extension point="xbmc.python.script" library="default.py">
-    <provides>executable</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">PyXBMCt Demo Addon</summary>
-    <description lang="en">Addon for demonstrating the capabilities and usage of PyXBMCt framework.</description>
-  </extension>
-</addon>
-
-<addon id="plugin.video.turkishtv" name="Turkish TV" version="0.1.14122215a" provider-name="andrewmarconi">
-  <requires>
-    <import addon="xbmc.python" version="2.6.0"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Watch live Turkish television.</summary>
-	<summary lang="tr">Canlı Türk televizyon izle.</summary>
-	<summary lang="de">Sehen Sie Live-türkischen Fernsehen</summary>
-
-    <description lang="en">Because streams tend to move to new locations, don't be surprised if some channels stop working at some point. We'll do our best to keep these up to date.</description>
-    <disclaimer lang="en"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
-  </extension>
-</addon>
-
-<addon id="repository.mmg" name="MMG Kodi Repository" version="1.0.14122215a" provider-name="andrewmarconi">
+<addon id="repository.mmg" name="MMG Kodi Repository" version="0.141226.5" provider-name="andrewmarconi">
 	<extension point="xbmc.addon.repository" name="MMG Kodi Repository">
-		<info compressed="false">https://raw.githubusercontent.com/andrewmarconi/mmg-kodi/master/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/andrewmarconi/mmg-kodi/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/andrewmarconi/mmg-kodi/master/zips</datadir>
+		<info compressed="false">http://kodi.marconimedia.com/addons.xml</info>
+		<checksum>http://kodi.marconimedia.com/addons.xml.md5</checksum>
+		<datadir zip="true">http://kodi.marconimedia.com/zips</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>MMG Kodi Repository</summary>
-		<description>Download and install some unoffical add-ons for Kodi.</description>
+		<summary lang="en">MMG Kodi Repository</summary>
+		<description lang="en">Download and install a variety of add-ons for Kodi.</description>
+
+		<summary lang="tr">MMG Kodi Deposu</summary>
+		<description lang="tr">Kodi için eklentilerin çeşitli indirin ve yükleyin.</description>
+
+		<summary lang="de">MMG Kodi Repository</summary>
+		<description lang="de">Downloaden und installieren Sie eine Vielzahl von Add-Ons für Kodi.</description>
+
+		<language>en tr de</language>
 		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<website>http://kodi.marconimedia.com/</website>
+		<email>info@marconimedia.com</email>
+		<source></source>
+
+	</extension>
+</addon>
+
+<addon id="script.mmg.turktv" name="Turkish TV" version="0.141226.5" provider-name="andrewmarconi">
+	<requires>
+<!--
+		<import addon="xbmc.python"					version="2.0.0"/>
+		<import addon="xbmc.xbmcgui"				version="5.0.0"/>
+		<import addon="xbmc.json"                   version="6.0.0"/>
+		<import addon="xbmc.metadata"               version="2.0.0"/>
+		<import addon="xbmc.addon"                  version="14.0.0"/>
+// -->
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Live Turkish Television</summary>
+		<description lang="en">Watch live streams of Turkish broadcast and cable television.</description>
+		<disclaimer lang="en"></disclaimer>
+
+		<summary lang="tr">Canlı Türk Televizyon</summary>
+		<description lang="tr">Türk yayın ve kablolu televizyon canlı akışları İzle.</description>
+		<disclaimer lang="tr"></disclaimer>
+
+		<summary lang="de">Live-türkischen Fernsehen</summary>
+		<description lang="de">Guckt man Livestreams der türkischen Rundfunk und Kabel-TV.</description>
+		<disclaimer lang="de"></disclaimer>
+
+		<language>en tr de</language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum></forum>
+		<website>http://kodi.marconimedia.com/</website>
+		<email>info@marconimedia.com</email>
+		<source></source>
 	</extension>
 </addon>
 </addons>

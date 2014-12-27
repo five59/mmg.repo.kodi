@@ -5,4 +5,4 @@ DST="andrew@s17985321.onlinehome-server.com:/var/www/sites/com_marconimedia_kodi
 echo "Synchronizing:"
 echo "--> SRC: ${SRC}"
 echo "--> DST: ${DST}"
-rsync -avzhe ssh --progress "${SRC}" "${DST}"
+rsync -avzhe ssh --progress --delete "${SRC}" "${DST}"

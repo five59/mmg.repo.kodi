@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="repository.mmg" name="MMG Kodi Repository" version="1.0.14122215a" provider-name="andrewmarconi">
+<addon id="repository.mmg" name="MMG Kodi Repository" version="0.141226.5" provider-name="andrewmarconi">
 	<extension point="xbmc.addon.repository" name="MMG Kodi Repository">
-		<info compressed="false">https://raw.githubusercontent.com/andrewmarconi/mmg-kodi/master/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/andrewmarconi/mmg-kodi/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/andrewmarconi/mmg-kodi/master/zips</datadir>
+		<info compressed="false">http://kodi.marconimedia.com/addons.xml</info>
+		<checksum>http://kodi.marconimedia.com/addons.xml.md5</checksum>
+		<datadir zip="true">http://kodi.marconimedia.com/zips</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>MMG Kodi Repository</summary>
-		<description>Download and install some unoffical add-ons for Kodi.</description>
+		<summary lang="en">MMG Kodi Repository</summary>
+		<description lang="en">Download and install a variety of add-ons for Kodi.</description>
+
+		<summary lang="tr">MMG Kodi Deposu</summary>
+		<description lang="tr">Kodi için eklentilerin çeşitli indirin ve yükleyin.</description>
+
+		<summary lang="de">MMG Kodi Repository</summary>
+		<description lang="de">Downloaden und installieren Sie eine Vielzahl von Add-Ons für Kodi.</description>
+
+		<language>en tr de</language>
 		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<website>http://kodi.marconimedia.com/</website>
+		<email>info@marconimedia.com</email>
+		<source></source>
+
 	</extension>
 </addon>
