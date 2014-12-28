@@ -35,12 +35,11 @@
 
 import os
 import sys
-import time
 import re
 import xml.etree.ElementTree as ET
 
 try:
-    import shutil,zipfile
+    import shutil, zipfile
 except Exception as e:
     print('An error occurred importing module!\n%s\n'  %e)
  
@@ -53,12 +52,18 @@ if sys.version < '3':
 else:
     def u(x):
         return x
- 
+
+srcDir=os.path.join(os.path.dirname(sys.path[0]),"source","addons")
+repoDir=os.path.join(os.path.dirname(sys.path[0]),"web","repo")
+    
 class Generator:
     """
         Generates a new addons.xml file from each addons addon.xml file
         and a new addons.xml.md5 hash file.
     """
+
+    srcDir=os.path.join(os.path.dirname(sys.path[0]),"source","addons")
+    repoDir=os.path.join(os.path.dirname(sys.path[0]),"web","repo")
 
     def __init__( self ):
         # generate files
@@ -70,18 +75,13 @@ class Generator:
     def _generate_addons_file( self ):
         print("     * Generating new addons.xml file for repo.")
         # Set up references
-        src_dir = os.path.dirname(sys.path[0]) + os.sep + "source" + os.sep + "addons"
-        repo_dir = os.path.dirname(sys.path[0]) + os.sep + "repo"
-        # addon list
-        addons = os.listdir(src_dir)        
-        # final addons text
+        addons = os.listdir(self.srcDir)
         addons_xml = u("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<addons>\n")
-        # loop thru and add each addons addon.xml file
         for addon in addons:
             try:
                 if re.search("plugin|script|service|skin|repository" , addon):
                     print("     * Found " + addon)
-                    _path = os.path.join( src_dir, addon, "addon.xml" )
+                    _path = os.path.join( self.srcDir, addon, "addon.xml" )
                     xml_lines = open( _path, "r" ).read().splitlines()
                     addon_xml = ""
                     for line in xml_lines:
@@ -101,87 +101,79 @@ class Generator:
         # clean and add closing tag
         addons_xml = addons_xml.strip() + u("\n</addons>\n")
         # save file
-        addonfilename=repo_dir + os.sep + "addons.xml"
-        self._save_file( addons_xml.encode( "UTF-8" ), file=addonfilename )
- 
+        addonFilename=os.path.join(self.repoDir,"addons.xml")
+        self._save_file( addons_xml.encode( "UTF-8" ), file=addonFilename )
+
     def _generate_md5_file( self ):
         print("     * Generating new addons.xml MD5 hashfile for repo.")
-        src_dir = os.path.dirname(sys.path[0]) + os.sep + "source" + os.sep + "addons"
-        repo_dir = os.path.dirname(sys.path[0]) + os.sep + "repo"
         # create a new md5 hash
         try:
             import md5
-            addonfilename = repo_dir + os.sep + "addons.xml"
-            m = md5.new( open(addonfilename, "r" ).read() ).hexdigest()
+            addonFilename=os.path.join(self.repoDir,"addons.xml")
+            m = md5.new( open(addonFilename, "r" ).read() ).hexdigest()
         except ImportError:
             import hashlib
-            m = hashlib.md5( open(addonfilename, "r", encoding="UTF-8" ).read().encode( "UTF-8" ) ).hexdigest()
+            m = hashlib.md5( open(addonFilename, "r", encoding="UTF-8" ).read().encode( "UTF-8" ) ).hexdigest()
         try:
-            self._save_file( m.encode( "UTF-8" ), file=repo_dir + os.sep + "addons.xml.md5" )
+            self._save_file( m.encode( "UTF-8" ), os.path.join(self.repoDir, "addons.xml.md5"))
         except Exception as e:
             print("* An error occurred creating addons.xml.md5 file!\n%s" % e)
  
     def _save_file( self, data, file ):
-        src_dir = os.path.dirname(sys.path[0]) + os.sep + "source" + os.sep + "addons"
-        repo_dir = os.path.dirname(sys.path[0]) + os.sep + "repo"
         try:
             open( file, "wb" ).write( data )
         except Exception as e:
             print("An error occurred saving %s file!\n%s" % ( file, e ))
  
-def zipfolder(foldername, suffix, target_dir, zips_dir):
-    src_dir = os.path.dirname(sys.path[0]) + os.sep + "source" + os.sep + "addons"
-    repo_dir = os.path.dirname(sys.path[0]) + os.sep + "repo"
-    zipobj = zipfile.ZipFile(zips_dir + foldername + suffix, 'w', zipfile.ZIP_DEFLATED)
-    rootlen = len(target_dir) + 1
+def zipFolder(foldername, suffix, target_dir, zips_dir):
+    zipObj = zipfile.ZipFile(zips_dir + foldername + suffix, 'w', zipfile.ZIP_DEFLATED)
+    rootLen = len(target_dir) + 1
     for base, dirs, files in os.walk(target_dir):
         for f in files:
             fn = os.path.join(base, f)
-            zipobj.write(fn, os.path.join(foldername,fn[rootlen:]))
-    zipobj.close()
+            zipObj.write(fn, os.path.join(foldername,fn[rootLen:]))
+    zipObj.close()
 
 if ( __name__ == "__main__" ):
     Generator()
     try:
-        src_dir = os.path.dirname(sys.path[0]) + os.sep + "source" + os.sep + "addons"
-        repo_dir = os.path.dirname(sys.path[0]) + os.sep + "repo"
-        filesinrootdir = os.listdir(src_dir)
-        for x in filesinrootdir:
+        filesInRootDir=os.listdir(srcDir)
+        for x in filesInRootDir:
             if re.search("plugin|script|service|skin|repository" , x) and not re.search('.zip',x):
                 print("\n--> Working on " + x + "...")
-                zipfilename = x + '.zip'
-                zipfilenamefirstpart = zipfilename[:-4]
-                zipfilenamelastpart = zipfilename[len(zipfilename)-4:]
-                zipsfolder = os.path.normpath(os.path.join(repo_dir,'zips',x)) + os.sep
-                foldertozip = src_dir + os.sep + x
-                filesinfoldertozip = os.listdir(foldertozip)        
-                if not os.path.exists(zipsfolder):
-                    os.makedirs(zipsfolder)
-                    print('    * Directory doesn\'t exist, creating: ' + zipsfolder)                
-                if "addon.xml" in filesinfoldertozip: 
+                zipFilename = x + '.zip'
+                zipFilenameFirstPart = zipFilename[:-4]
+                zipFilenameLastPart = zipFilename[len(zipFilename)-4:]
+                zipsFolder = os.path.normpath(os.path.join(repoDir,'zips',x)) + os.sep
+                folderToZip = srcDir + os.sep + x
+                filesInFolderToZip = os.listdir(folderToZip)        
+                if not os.path.exists(zipsFolder):
+                    os.makedirs(zipsFolder)
+                    print('    * Directory doesn\'t exist, creating: ' + zipsFolder)                
+                if "addon.xml" in filesInFolderToZip: 
                     print('    * Found plugin addon.xml file.')
-                    tree = ET.parse(os.path.join(src_dir, x, "addon.xml"))
+                    tree = ET.parse(os.path.join(srcDir, x, "addon.xml"))
                     root = tree.getroot()
                     for elem in root.iter('addon'):
                         print('    * %s %s version: %s' %(x,elem.tag,elem.attrib['version']))
                         version = '-'+elem.attrib['version']                  
                 print('    * Copying repo files.')                
-                for y in filesinfoldertozip: 
+                for y in filesInFolderToZip: 
                     if re.search("addon.xml|changelog|icon|fanart", y):
-                        shutil.copyfile(os.path.join(src_dir,x,y), os.path.join(zipsfolder,y))
+                        shutil.copyfile(os.path.join(srcDir,x,y), os.path.join(zipsFolder,y))
                         if re.search("changelog", y):
                             verName = y[:-4]+version+'.txt'
-                            shutil.copyfile(os.path.join(zipsfolder,y), os.path.join(zipsfolder,verName))
-                print('    * Zipping %s and moving to %s' %(x,zipsfolder))
+                            shutil.copyfile(os.path.join(zipsFolder,y), os.path.join(zipsFolder,verName))
+                print('    * Zipping %s and moving to %s' %(x,zipsFolder))
                 try:
-                    zipfolder(zipfilenamefirstpart, version+zipfilenamelastpart, foldertozip, zipsfolder)
-                    print('    * Zipped with zipfolder')
+                    zipFolder(zipFilenameFirstPart, version+zipFilenameLastPart, folderToZip, zipsFolder)
+                    print('    * Zipped with zipFolder')
                 except:
-                    if os.path.exists(zipsfolder + x + version + '.zip' ):
-                        os.remove(zipsfolder + x + version + '.zip' )
+                    if os.path.exists(zipsFolder + x + version + '.zip' ):
+                        os.remove(zipsFolder + x + version + '.zip' )
                         print('    * Trying shutil')
                     try:
-                        shutil.move(shutil.make_archive(foldertozip + version, 'zip', foldertozip), zipsfolder)
+                        shutil.move(shutil.make_archive(folderToZip + version, 'zip', folderToZip), zipsFolder)
                         print('    * Zipped with shutil')
                     except Exception as e:
                         print('Cannot create zip file\nshutil %s\n' %e)
