@@ -132,7 +132,7 @@ class Generator:
 
 
 def generateFromTemplateFile(srcToken, srcFilePath, replacementValue, sourceFilePath, destFilePath):
-        # TODO 
+        # TODO
         pass
 
 def zipFolder(foldername, suffix, target_dir, zips_dir):
