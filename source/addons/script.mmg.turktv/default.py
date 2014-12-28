@@ -2,23 +2,26 @@
 # Licence: GPL v.3 http://www.gnu.org/licenses/gpl.html
 
 import os, sys, json, xbmcgui, xbmcaddon, urlparse
+import xbmc, xbmcplugin
 
 _addon = xbmcaddon.Addon()
 _addon_path = _addon.getAddonInfo('path').decode(sys.getfilesystemencoding())
 
 language = xbmcaddon.Addon().getLocalizedString
 
-path_base = xbmcaddon.Addon().getAddonInfo('path').decode(sys.getfilesystemencoding())
-path_icon = os.path.join(path_base, "resources", "media", "icon")
-path_fart = os.path.join(path_base, "resources", "media", "fanart")
-background_image = os.path.join(path_base, "fanart.jpg")
+pathBase = xbmcaddon.Addon().getAddonInfo('path').decode(sys.getfilesystemencoding())
+pathIcon = os.path.join(pathBase, "resources", "media", "icon")
+pathFArt = os.path.join(pathBase, "resources", "media", "fanart")
+backgroundImage = os.path.join(pathBase, "fanart.jpg")
 
 ACTION_PREVIOUS_MENU = 10 # Esc
 ACTION_NAV_BACK = 92 # Backspace
 ALIGN_LEFT = 5
 ALIGN_CENTER = 6
 
-NAV_SIZE = 64
+NAVMODE_CATEGORY = 10
+NAVMODE_CHANNEL = 11
+
 
 class MMGTTYAddon(xbmcgui.Window):
     
@@ -28,22 +31,24 @@ class MMGTTYAddon(xbmcgui.Window):
         self.setControls()
         self.setNavigation()
         self.setChannelList(30010)
+        self.navMode = NAVMODE_CATEGORY
+        xbmc.log("MMGTTYAddon Init",xbmc.LOGINFO)
 
     def setControls(self):
         # Set background
-        self.addControl(xbmcgui.ControlImage(1,1, 1280, 720, background_image))
+        self.addControl(xbmcgui.ControlImage(1,1, 1280, 720, backgroundImage))
 
         # Create Category Nav
         self.catBtn={}
         for grouping in range(30010, 30020):
-            icon0=os.path.join(path_icon, "category",str(NAV_SIZE),"b",str(grouping)+".png")
-            icon1=os.path.join(path_icon, "category",str(NAV_SIZE),"g",str(grouping)+".png")
-            yPos=10 + ((NAV_SIZE + 3) * (grouping - 30010))
+            icon0=os.path.join(pathIcon, "category",str(64),"b",str(grouping)+".png")
+            icon1=os.path.join(pathIcon, "category",str(64),"g",str(grouping)+".png")
+            yPos=10 + (67 * (grouping - 30010))
             self.catBtn[str(grouping)]=xbmcgui.ControlButton(
                 x=10,
                 y=yPos,
-                width=NAV_SIZE,
-                height=NAV_SIZE,
+                width=64,
+                height=64,
                 focusTexture=icon0,
                 noFocusTexture=icon1,
                 label=u''
@@ -57,7 +62,7 @@ class MMGTTYAddon(xbmcgui.Window):
             y=10,
             width=1150,
             height=100,
-            label=u'TurkishTV',
+            label=u'Turkish TV',
             font='font48_title',
             textColor='0xFFFFFFFF'
         )
@@ -80,13 +85,13 @@ class MMGTTYAddon(xbmcgui.Window):
 
     def loadChannelList(self):
         try:
-            dataFile=os.path.join(path_base, "resources", "data", "channels.json")
+            dataFile=os.path.join(pathBase, "resources", "data", "channels.json")
             json_data=open(dataFile,'r')
             self.channelData = json.load(json_data)
-            print("Channel Data Version: " + self.channelData['meta']['dtdVer'])
             json_data.close()
+            xbmc.log("Channel Data Version: " + self.channelData['meta']['dtdVer'], xbmc.LOGINFO)
         except:
-            print("Channels did not load.")
+            xbmc.log("Channels did not load.",xbmc.LOGERROR)
             self.close()
 
     def setChannelList(self, categoryID):
