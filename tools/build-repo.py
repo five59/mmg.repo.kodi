@@ -65,6 +65,11 @@ class Generator:
     srcDir=os.path.join(os.path.dirname(sys.path[0]),"source","addons")
     repoDir=os.path.join(os.path.dirname(sys.path[0]),"web","repo")
 
+    webAddonItems=""
+    webAddonItems_token="{ITEMS}"
+    webAddonModals=""
+    webAddonModals_token="{MODALS}"
+
     def __init__( self ):
         # generate files
         print("\n\n--> Updating repo metadata.")
@@ -124,7 +129,12 @@ class Generator:
             open( file, "wb" ).write( data )
         except Exception as e:
             print("An error occurred saving %s file!\n%s" % ( file, e ))
- 
+
+
+def generateFromTemplateFile(srcToken, srcFilePath, replacementValue, sourceFilePath, destFilePath):
+        # TODO 
+        pass
+
 def zipFolder(foldername, suffix, target_dir, zips_dir):
     zipObj = zipfile.ZipFile(zips_dir + foldername + suffix, 'w', zipfile.ZIP_DEFLATED)
     rootLen = len(target_dir) + 1
