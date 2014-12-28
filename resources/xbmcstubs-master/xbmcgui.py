@@ -90,6 +90,7 @@ class Window(object):
     def addControl(self, control):
         """Add a Control to this window.
 
+        :rtype : object
         Raises:
             TypeError: If supplied argument is not a Control type.
             ReferenceError: If control is already used in another window.
