@@ -55,7 +55,10 @@ else:
 
 srcDir=os.path.join(os.path.dirname(sys.path[0]),"source","addons")
 repoDir=os.path.join(os.path.dirname(sys.path[0]),"web","repo")
-    
+
+webIndexSrc=os.path.join(os.path.dirname(sys.path[0]),"source","web","index.src.html")
+webIndexDst=os.path.join(os.path.dirname(sys.path[0]),"web","index.html")
+
 class Generator:
     """
         Generates a new addons.xml file from each addons addon.xml file
@@ -65,21 +68,15 @@ class Generator:
     srcDir=os.path.join(os.path.dirname(sys.path[0]),"source","addons")
     repoDir=os.path.join(os.path.dirname(sys.path[0]),"web","repo")
 
-    webAddonItems=""
-    webAddonItems_token="{ITEMS}"
-    webAddonModals=""
-    webAddonModals_token="{MODALS}"
-
     def __init__( self ):
         # generate files
         print("\n\n--> Updating repo metadata.")
         self._generate_addons_file()
         self._generate_md5_file()
         # notify user
- 
+
     def _generate_addons_file( self ):
         print("     * Generating new addons.xml file for repo.")
-        # Set up references
         addons = os.listdir(self.srcDir)
         addons_xml = u("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<addons>\n")
         for addon in addons:
@@ -98,7 +95,6 @@ class Generator:
                     addons_xml += addon_xml.rstrip() + "\n\n"
                 else:
                     pass
-            
             except Exception as e:
                 # missing or poorly formatted addon.xml
                 _path = os.path.join( addon, "addon.xml" )
@@ -130,11 +126,6 @@ class Generator:
         except Exception as e:
             print("An error occurred saving %s file!\n%s" % ( file, e ))
 
-
-def generateFromTemplateFile(srcToken, srcFilePath, replacementValue, sourceFilePath, destFilePath):
-        # TODO
-        pass
-
 def zipFolder(foldername, suffix, target_dir, zips_dir):
     zipObj = zipfile.ZipFile(zips_dir + foldername + suffix, 'w', zipfile.ZIP_DEFLATED)
     rootLen = len(target_dir) + 1
@@ -147,6 +138,28 @@ def zipFolder(foldername, suffix, target_dir, zips_dir):
 if ( __name__ == "__main__" ):
     Generator()
     try:
+        webAddons={
+            "Thumb":{
+                "Filename":os.path.join(os.path.dirname(sys.path[0]),"source","server","web","addons.item.html"),
+                "Template":"",
+                "HTML":""
+            },
+            "Modal":{
+                "Filename":os.path.join(os.path.dirname(sys.path[0]),"source","server","web","addons.modal.html"),
+                "Template":"",
+                "HTML":""
+            },
+            "Items":{}
+        }
+        print(str(webAddons["Thumb"]["File"]))
+        with open (str(webAddons["Thumb"]["File"]), "r") as fp:
+            webAddons["Thumb"]["Template"]=fp.read()
+            fp.close()
+        with open (webAddons["Modal"]["File"], "r") as fp:
+            webAddons["Modal"]["Template"]=fp.read()
+            fp.close()
+
+
         filesInRootDir=os.listdir(srcDir)
         for x in filesInRootDir:
             if re.search("plugin|script|service|skin|repository" , x) and not re.search('.zip',x):
@@ -166,7 +179,28 @@ if ( __name__ == "__main__" ):
                     root = tree.getroot()
                     for elem in root.iter('addon'):
                         print('    * %s %s version: %s' %(x,elem.tag,elem.attrib['version']))
-                        version = '-'+elem.attrib['version']                  
+                        version = '-'+elem.attrib['version']
+                        item = {
+                            "id": elem.attrib['id'],
+                            "Title": elem.attrib['name'],
+                            "Version": elem.attrib['version']
+                        }
+                    webAddons["Items"][id]={
+                        "Title":item["Title"],
+                        "Version":item["Version"]
+                    }
+                    for item in webAddons["Items"]:
+                        webAddons["Thumb"]["HTML"] += str(webAddons["Thumb"]["Template"]).replace("{ID}",item['id']).replace("{TITLE}",item['Title']).replace("{VERSION}",item["Version"])
+                    # TODO - Develop modal popup
+
+                print("    * Generate index.html.")
+                with open(webIndexSrc,"r") as fp:
+                    html=fp.read()
+                    fp.close()
+                html = html.replace("{ITEMS}",html)
+
+                fp = open(webIndexDst,"wb").write(html)
+
                 print('    * Copying repo files.')                
                 for y in filesInFolderToZip: 
                     if re.search("addon.xml|changelog|icon|fanart", y):
