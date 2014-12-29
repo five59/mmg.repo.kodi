@@ -56,8 +56,8 @@ else:
 srcDir=os.path.join(os.path.dirname(sys.path[0]),"source","addons")
 repoDir=os.path.join(os.path.dirname(sys.path[0]),"web","repo")
 
-webIndexSrc=os.path.join(os.path.dirname(sys.path[0]),"source","web","index.src.html")
-webIndexDst=os.path.join(os.path.dirname(sys.path[0]),"web","index.html")
+# webIndexSrc=os.path.join(os.path.dirname(sys.path[0]),"source","web","index.src.html")
+# webIndexDst=os.path.join(os.path.dirname(sys.path[0]),"web","index.html")
 
 class Generator:
     """
@@ -138,27 +138,26 @@ def zipFolder(foldername, suffix, target_dir, zips_dir):
 if ( __name__ == "__main__" ):
     Generator()
     try:
-        webAddons={
-            "Thumb":{
-                "Filename":os.path.join(os.path.dirname(sys.path[0]),"source","server","web","addons.item.html"),
-                "Template":"",
-                "HTML":""
-            },
-            "Modal":{
-                "Filename":os.path.join(os.path.dirname(sys.path[0]),"source","server","web","addons.modal.html"),
-                "Template":"",
-                "HTML":""
-            },
-            "Items":{}
-        }
-        print(str(webAddons["Thumb"]["File"]))
-        with open (str(webAddons["Thumb"]["File"]), "r") as fp:
-            webAddons["Thumb"]["Template"]=fp.read()
-            fp.close()
-        with open (webAddons["Modal"]["File"], "r") as fp:
-            webAddons["Modal"]["Template"]=fp.read()
-            fp.close()
-
+        # webAddons={
+        #     "Thumb":{
+        #         "Filename":os.path.join(os.path.dirname(sys.path[0]),"source","server","web","addons.item.html"),
+        #         "Template":"",
+        #         "HTML":""
+        #     },
+        #     "Modal":{
+        #         "Filename":os.path.join(os.path.dirname(sys.path[0]),"source","server","web","addons.modal.html"),
+        #         "Template":"",
+        #         "HTML":""
+        #     },
+        #     "Items":{}
+        # }
+        # print(str(webAddons["Thumb"]["File"]))
+        # with open (str(webAddons["Thumb"]["File"]), "r") as fp:
+        #     webAddons["Thumb"]["Template"]=fp.read()
+        #     fp.close()
+        # with open (webAddons["Modal"]["File"], "r") as fp:
+        #     webAddons["Modal"]["Template"]=fp.read()
+        #     fp.close()
 
         filesInRootDir=os.listdir(srcDir)
         for x in filesInRootDir:
@@ -185,21 +184,21 @@ if ( __name__ == "__main__" ):
                             "Title": elem.attrib['name'],
                             "Version": elem.attrib['version']
                         }
-                    webAddons["Items"][id]={
-                        "Title":item["Title"],
-                        "Version":item["Version"]
-                    }
-                    for item in webAddons["Items"]:
-                        webAddons["Thumb"]["HTML"] += str(webAddons["Thumb"]["Template"]).replace("{ID}",item['id']).replace("{TITLE}",item['Title']).replace("{VERSION}",item["Version"])
+                    # webAddons["Items"][id]={
+                    #     "Title":item["Title"],
+                    #     "Version":item["Version"]
+                    # }
+                    # for item in webAddons["Items"]:
+                    #     webAddons["Thumb"]["HTML"] += str(webAddons["Thumb"]["Template"]).replace("{ID}",item['id']).replace("{TITLE}",item['Title']).replace("{VERSION}",item["Version"])
                     # TODO - Develop modal popup
 
-                print("    * Generate index.html.")
-                with open(webIndexSrc,"r") as fp:
-                    html=fp.read()
-                    fp.close()
-                html = html.replace("{ITEMS}",html)
-
-                fp = open(webIndexDst,"wb").write(html)
+                # print("    * Generate index.html.")
+                # with open(webIndexSrc,"r") as fp:
+                #     html=fp.read()
+                #     fp.close()
+                # html = html.replace("{ITEMS}",html)
+                #
+                # fp = open(webIndexDst,"wb").write(html)
 
                 print('    * Copying repo files.')                
                 for y in filesInFolderToZip: 
