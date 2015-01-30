@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="repository.mmg" name="MMG Kodi Repository" version="0.141226.5" provider-name="andrewmarconi">
+<addon id="repository.mmg" name="MMG Kodi Repository" version="0.141226.5" provider-name="MarconiMediaGroup">
 	<extension point="xbmc.addon.repository" name="MMG Kodi Repository">
 		<info compressed="false">http://kodi.marconimedia.com/addons.xml</info>
 		<checksum>http://kodi.marconimedia.com/addons.xml.md5</checksum>
@@ -26,7 +26,7 @@
 	</extension>
 </addon>
 
-<addon id="script.mmg.turktv" name="Turkish TV" version="0.141226.5" provider-name="andrewmarconi">
+<addon id="script.mmg.turktv" name="Turkish TV" version="0.141226.5" provider-name="MarconiMediaGroup">
 	<requires>
 <!--
 		<import addon="xbmc.python"					version="2.0.0"/>

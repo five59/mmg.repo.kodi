@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.mmg.turktv" name="Turkish TV" version="0.141226.5" provider-name="andrewmarconi">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.mmg.turktv" name="Turkish TV" version="0.141226.5" provider-name="MarconiMediaGroup">
 	<requires>
 <!--
 		<import addon="xbmc.python"					version="2.0.0"/>

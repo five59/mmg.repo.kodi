@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.turkishtv" name="Turkish TV" version="0.1.14122215a" provider-name="andrewmarconi">
+<addon id="plugin.video.turkishtv" name="Turkish TV" version="0.1.14122215a" provider-name="MarconiMediaGroup">
   <requires>
     <import addon="xbmc.python" version="2.6.0"/>
   </requires>
